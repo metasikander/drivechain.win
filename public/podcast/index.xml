@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Drivechain</title>
+    <link>https://drivechain.win/podcast/</link>
+    <description>Everything about Drivechain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 23 Sep 2022 15:55:05 +0200</lastBuildDate>
+    <itunes:image href="https://drivechain.win/logo.webp" />
+    <itunes:category text="Technology">
+      <itunes:category text="Blockchain" />
+    </itunes:category>
+    <itunes:owner>
+    <itunes:name>Drivechain</itunes:name>
+    <itunes:email>contact@drivechain.win</itunes:email>
+    </itunes:owner>
+    <itunes:summary>Everything about Drivechain</itunes:summary>
+    <itunes:author>Drivechain</itunes:author>
+    <itunes:type>episodic</itunes:type>
+    
+    
+    
+    <itunes:explicit>false</itunes:explicit>
+    
+    <item>
+      <title>Test pod</title>
+      <itunes:title>Test pod</itunes:title>
+      <link>https://drivechain.win/podcast/test_pod/</link>
+      <guid>https://drivechain.win/podcast/test_pod/</guid>
+      <pubDate>Fri, 23 Sep 2022 15:55:05 +0200</pubDate>
+      <description>&lt;p&gt;Testing podcast function in hugo&lt;/p&gt;
+</description>
+      <enclosure url="https://drivechain.win/podcast/test_pod.mp3" type="audio/mpeg" />
+      <itunes:duration>0.27</itunes:duration>
+      
+      
+      
+      
+      
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    
+  </channel>
+</rss>
