@@ -1,7 +1,7 @@
-// ---------------------------------------------------------------------------
-// drivechain.win — a single-page notice. Dark-first, light-mode aware.
-// Register: official notice / ledger. Serif display, mono labels, hairlines.
-// ---------------------------------------------------------------------------
+/* ---------------------------------------------------------------------------
+   drivechain.win — a single-page notice. Dark-first, light-mode aware.
+   Register: official notice / ledger. Serif display, mono labels, hairlines.
+   --------------------------------------------------------------------------- */
 
 :root {
   color-scheme: light dark;
@@ -273,8 +273,6 @@ a:hover { text-decoration-color: currentColor; }
   color: var(--ink);
 }
 
-.lede--muted { color: var(--ink-dim); }
-
 .section__title {
   font-family: var(--mono);
   font-size: 0.75rem;
@@ -375,11 +373,6 @@ a:hover { text-decoration-color: currentColor; }
   background: var(--warn-soft);
 }
 
-.block--ok {
-  --block-accent: var(--ok-line);
-  background: var(--ok-soft);
-}
-
 .block__title {
   margin: 0 0 0.6rem;
   font-family: var(--mono);
@@ -391,8 +384,6 @@ a:hover { text-decoration-color: currentColor; }
 }
 
 .block--warn .block__title { color: var(--warn); }
-.block--ok .block__title { color: var(--ok); }
-
 .block p { margin: 0 0 0.5rem; max-width: var(--measure); }
 .block p:last-child { margin-bottom: 0; }
 
