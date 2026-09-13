@@ -1,0 +1,7 @@
+<header class="masthead">
+  <a class="masthead__mark" href="{{ "/" | relURL }}"><b>drivechain</b><span>.win</span></a>
+  <nav class="masthead__nav" aria-label="Site">
+    {{- with site.Params.rawStatePath }}<a href="{{ . | relURL }}">Raw state (JSON)</a>{{ end }}
+    {{- with site.Params.contact }}<a href="mailto:{{ . }}">Contact</a>{{ end }}
+  </nav>
+</header>

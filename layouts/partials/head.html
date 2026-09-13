@@ -1,0 +1,22 @@
+{{- $title := site.Title -}}
+{{- if and .IsPage (ne .Title "Home") -}}{{- $title = printf "%s — %s" .Title site.Title -}}{{- end -}}
+{{- $desc := .Description | default site.Params.description -}}
+{{- $css := resources.Get "css/main.css" | minify | fingerprint "sha256" -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta name="generator" content="Hugo {{ hugo.Version }}">
+<meta name="theme-color" content="#0c0e11" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fbf9f5" media="(prefers-color-scheme: light)">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
+<link rel="icon" type="image/png" href="{{ "favicon-32x32.png" | relURL }}" sizes="32x32">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">

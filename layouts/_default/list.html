@@ -1,0 +1,11 @@
+{{ define "main" }}
+<article class="prose">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ .Content }}
+  {{ with .Pages }}
+  <ul class="sources">
+    {{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ .Date.Format "2 Jan 2006" }}</span></li>{{ end }}
+  </ul>
+  {{ end }}
+</article>
+{{ end }}
