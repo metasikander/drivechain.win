@@ -477,24 +477,35 @@ kbd {
   text-align: right;
 }
 
-/* disclaimer — plain by design, always present */
+/* disclaimer — boxed and coloured so it is actually read */
 .disclaimer {
-  border-top: 1px solid var(--line);
-  padding-top: 1.35rem;
-  margin-top: 0.5rem;
+  border: 1px solid var(--accent-line);
+  border-radius: 3px;
+  background: var(--accent-soft);
+  padding: 1.15rem clamp(1rem, 2.5vw, 1.6rem) 1.3rem;
+}
+
+.disclaimer .section__title {
+  color: var(--accent);
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 0.7rem;
 }
 
 .disclaimer p {
   max-width: var(--measure);
   font-size: 0.9375rem;
   line-height: 1.65;
-  color: var(--ink-dim);
-  margin: 0 0 0.75rem;
+  color: var(--ink);
+  margin: 0 0 0.7rem;
 }
 
 .disclaimer p:last-child { margin-bottom: 0; }
 
-.disclaimer strong { color: var(--ink); }
+.disclaimer strong {
+  color: var(--accent);
+  font-weight: 600;
+}
 
 /* changelog */
 .log {

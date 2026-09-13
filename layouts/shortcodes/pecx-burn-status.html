@@ -8,6 +8,7 @@
 {{- $status := $d.status | default "waiting" -}}
 {{- $checked := "" -}}{{- with $d.last_checked }}{{ $checked = (time.AsTime .).Format "2 Jan 2006 15:04 MST" }}{{ end -}}
 {{- $changed := "" -}}{{- with $d.last_change }}{{ $changed = (time.AsTime .).Format "2 Jan 2006 15:04 MST" }}{{ end -}}
+{{- $cadence := $d.cadence | default "3 hours" -}}
 {{- $label := "Not yet published" -}}
 {{- if eq $status "announced" }}{{ $label = "Announcement under verification" }}{{ end -}}
 {{- if eq $status "published" }}{{ $label = "Spec published" }}{{ end -}}
@@ -27,6 +28,20 @@
 
     <h1 class="headline">{{ $d.headline | default "pECX burn status" }}</h1>
     <p class="lede">{{ $d.message | default "No official burn specification has been published yet." }}</p>
+
+    <section class="disclaimer">
+      <h2 class="section__title">Disclaimer — read this</h2>
+      <p><strong>This page is vibe-coded.</strong> It was written by an AI agent, it has not been
+        reviewed or audited by anyone, and it can be wrong — including about the burn address,
+        the ratio, the deadline and the steps on this page. Treat it as a signpost, never as a
+        source, and check anything important somewhere you trust.</p>
+      <p><strong>Do not follow burn, swap or conversion guides from random websites, videos, chats,
+        DMs or strangers.</strong> A page like this one is exactly what a scam looks like from the
+        outside. Verify every detail yourself against more than one of the official sources listed
+        below, and check the address character-for-character before you send anything anywhere.</p>
+      <p>Nothing here is financial advice, and this site is not affiliated with the eCash or
+        Drivechain developers. Never enter a seed phrase or private key anywhere to &ldquo;receive&rdquo; coins.</p>
+    </section>
 
     {{- if eq $status "announced" }}
       {{- with $d.announcement }}
@@ -104,7 +119,7 @@
 
     {{- with $d.sources }}
     <section>
-      <h2 class="section__title">Sources watched, every 12 hours</h2>
+      <h2 class="section__title">Sources watched, every {{ $cadence }}</h2>
       <ul class="sources">
         {{- range . }}
         <li><a href="{{ .url }}" rel="noopener nofollow">{{ .name }}</a>{{ with .note }}<span>{{ . }}</span>{{ end }}</li>
@@ -112,19 +127,6 @@
       </ul>
     </section>
     {{- end }}
-
-    <section class="disclaimer">
-      <h2 class="section__title">Disclaimer — read this</h2>
-      <p><strong>This page is vibe-coded.</strong> It was written by an AI agent, it has not been
-        reviewed or audited by anyone, and it can be wrong — including about the burn address,
-        the ratio, the deadline and the steps above. Treat it as a signpost, never as a source.</p>
-      <p><strong>Do not follow burn, swap or conversion guides from random websites, videos, chats,
-        DMs or strangers.</strong> A page like this one is exactly what a scam looks like from the
-        outside. Verify every detail yourself against more than one of the official sources listed
-        below, and check the address character-for-character before you send anything anywhere.</p>
-      <p>Nothing here is financial advice, and this site is not affiliated with the eCash or
-        Drivechain developers. Never enter a seed phrase or private key anywhere to &ldquo;receive&rdquo; coins.</p>
-    </section>
 
     {{- with $d.history }}
     <section>
