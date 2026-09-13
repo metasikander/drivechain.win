@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "status": "waiting",
-  "last_checked": "2026-09-13T15:24:07Z",
-  "last_change": "2026-09-08T19:18:03Z",
+  "last_checked": "2026-09-13T19:15:06Z",
+  "last_change": "2026-09-13T19:42:53Z",
   "headline": "No official burn specification has been published.",
   "message": "There is no official pECX burn address, redemption specification or conversion instruction yet. Redemption into ECX happens at mainnet (around 31 October 2026). Anything claiming otherwise — a \"burn address\" posted in a chat, a DM, or an unofficial site — should be treated as a scam until it appears on the official sources listed below.",
   "expect": {
@@ -11,14 +11,39 @@
     "note": "Balances may not carry over from alpha to beta."
   },
   "sources": [
-    { "name": "drivechain.info/dev.txt", "url": "https://drivechain.info/dev.txt", "note": "canonical fast-info file" },
-    { "name": "ecash.com", "url": "https://ecash.com", "note": "official site" },
-    { "name": "alpha.ecash.ninja/info", "url": "https://alpha.ecash.ninja/info", "note": "alphanet hub" },
-    { "name": "ecashblog.com", "url": "https://ecashblog.com/rss.xml", "note": "community blog" },
-    { "name": "github.com/ecash-com", "url": "https://github.com/orgs/ecash-com/repositories", "note": "official repos" },
-    { "name": "t.me/s/DcInsiders", "url": "https://t.me/s/DcInsiders", "note": "telegram (unverified)" }
+    {
+      "name": "drivechain.info/dev.txt",
+      "url": "https://drivechain.info/dev.txt",
+      "note": "canonical fast-info file"
+    },
+    {
+      "name": "ecash.com",
+      "url": "https://ecash.com",
+      "note": "official site"
+    },
+    {
+      "name": "alpha.ecash.ninja/info",
+      "url": "https://alpha.ecash.ninja/info",
+      "note": "alphanet hub"
+    },
+    {
+      "name": "ecashblog.com",
+      "url": "https://ecashblog.com/rss.xml",
+      "note": "community blog"
+    },
+    {
+      "name": "github.com/ecash-com",
+      "url": "https://github.com/orgs/ecash-com/repositories",
+      "note": "official repos"
+    },
+    {
+      "name": "t.me/s/DcInsiders",
+      "url": "https://t.me/s/DcInsiders",
+      "note": "telegram (unverified)"
+    }
   ],
   "announcement": null,
   "spec": null,
-  "history": []
+  "history": [],
+  "cadence": "3 hours"
 }
