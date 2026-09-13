@@ -1,0 +1,125 @@
+{{- /* Renders the pECX burn-published status page from data/pecx_burn.json.
+       Three states: waiting | announced | published. Written by the burn-spec
+       watcher cron job; do not hand-edit on the site unless you mean to. */ -}}
+{{- $d := site.Data.pecx_burn -}}
+{{- if not $d -}}
+<p><strong>Status data is missing.</strong> This page is generated from <code>data/pecx_burn.json</code>.</p>
+{{- else -}}
+{{- $status := $d.status | default "waiting" -}}
+{{- $checked := "" -}}{{- with $d.last_checked }}{{ $checked = (time.AsTime .).Format "2 Jan 2006 15:04 MST" }}{{ end -}}
+{{- $changed := "" -}}{{- with $d.last_change }}{{ $changed = (time.AsTime .).Format "2 Jan 2006 15:04 MST" }}{{ end -}}
+<div class="ps">
+<style>
+.ps{--ps-fg:#16202b;--ps-dim:#5b6b7c;--ps-line:#d9e1e8;--ps-bg:#f7f9fb;--ps-warn:#8a5300;--ps-warnbg:#fff8e6;--ps-warnline:#eace7d;--ps-ok:#0b6b3a;--ps-okbg:#eefaf2;--ps-okline:#9ad7b3;font-size:1rem;line-height:1.55}
+@media (prefers-color-scheme:dark){.ps{--ps-fg:#e8edf2;--ps-dim:#9dabb9;--ps-line:#39434f;--ps-bg:#1b2027;--ps-warn:#f0c469;--ps-warnbg:#2a2417;--ps-warnline:#5c4a20;--ps-ok:#7fdcab;--ps-okbg:#16241d;--ps-okline:#2c5c40}}
+.ps .ps-card{border:1px solid var(--ps-line);border-radius:10px;padding:1.1rem 1.25rem;background:var(--ps-bg);color:var(--ps-fg)}
+.ps .ps-pill{display:inline-block;font:600 .72rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--ps-line);border-radius:999px;padding:.1rem .6rem;color:var(--ps-dim);margin-bottom:.7rem}
+.ps .ps-pill--ok{color:var(--ps-ok);border-color:var(--ps-okline);background:var(--ps-okbg)}
+.ps .ps-pill--warn{color:var(--ps-warn);border-color:var(--ps-warnline);background:var(--ps-warnbg)}
+.ps .ps-msg{font-size:1.12rem;margin:0 0 .8rem}
+.ps .ps-note,.ps .ps-meta{color:var(--ps-dim);font-size:.86rem;margin:.6rem 0 0}
+.ps .ps-meta code{font-size:.85rem}
+.ps .ps-warn{border:1px solid var(--ps-warnline);background:var(--ps-warnbg);color:var(--ps-warn);border-radius:10px;padding:.9rem 1.1rem;margin:1rem 0}
+.ps .ps-warn p{margin:.35rem 0}
+.ps table.ps-facts{border-collapse:collapse;margin:1rem 0;width:100%}
+.ps table.ps-facts th,.ps table.ps-facts td{border:0;border-bottom:1px solid var(--ps-line);padding:.5rem .6rem .5rem 0;text-align:left;vertical-align:top}
+.ps table.ps-facts th{width:38%;font-weight:600;color:var(--ps-dim);white-space:nowrap}
+.ps .ps-addr{font:600 1rem/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-all;user-select:all;display:inline-block;padding:.25rem .4rem;border:1px dashed var(--ps-line);border-radius:6px}
+.ps ol.ps-steps{padding-left:1.2rem}
+.ps ol.ps-steps>li{margin:.55rem 0}
+.ps ol.ps-steps strong{font-weight:600}
+.ps h2.ps-h{font-size:1.05rem;margin:1.6rem 0 .5rem;padding-bottom:.25rem;border-bottom:1px solid var(--ps-line)}
+.ps ul.ps-src{list-style:none;padding:0;margin:.5rem 0 0;font-size:.9rem;color:var(--ps-dim)}
+.ps ul.ps-src li{margin:.2rem 0}
+.ps ul.ps-src a{color:inherit}
+.ps .ps-hist{font-size:.9rem;color:var(--ps-dim)}
+</style>
+
+{{- if eq $status "published" -}}
+  <div class="ps-card">
+    <span class="ps-pill ps-pill--ok">spec published</span>
+    {{- with $d.headline }}<p class="ps-msg"><strong>{{ . }}</strong></p>{{ end }}
+    {{- $s := $d.spec -}}
+    {{- if $s }}
+    <table class="ps-facts">
+      {{- with $s.burn_address }}<tr><th>Burn address</th><td><span class="ps-addr">{{ . }}</span></td></tr>{{ end }}
+      {{- with $s.network }}<tr><th>Network / chain</th><td>{{ . }}</td></tr>{{ end }}
+      {{- with $s.ratio }}<tr><th>Conversion ratio</th><td>{{ . }}</td></tr>{{ end }}
+      {{- with $s.minimum }}<tr><th>Minimum burn</th><td>{{ . }}</td></tr>{{ end }}
+      {{- with $s.deadline }}<tr><th>Deadline</th><td>{{ . }}</td></tr>{{ end }}
+      {{- with $s.mainnet }}<tr><th>Mainnet</th><td>{{ . }}</td></tr>{{ end }}
+      {{- with $s.payout }}<tr><th>Payout</th><td>{{ . }}</td></tr>{{ end }}
+      {{- with $s.published_on }}<tr><th>Published</th><td>{{ . }}</td></tr>{{ end }}
+      {{- with $s.source_url }}<tr><th>Source</th><td><a href="{{ . }}" rel="noopener">{{ . }}</a></td></tr>{{ end }}
+    </table>
+    {{- end }}
+    {{- with $d.announcement }}{{ with .quote }}<p class="ps-note">Announcement: “{{ . }}”</p>{{ end }}{{ end }}
+  </div>
+
+  {{- with $d.warnings }}
+  <div class="ps-warn">
+    <p><strong>Read before you burn</strong></p>
+    {{- range . }}<p>• {{ . }}</p>{{ end }}
+  </div>
+  {{- end }}
+
+  {{- with $d.spec }}
+    {{- with .guide }}
+    <h2 class="ps-h">How to convert</h2>
+    <ol class="ps-steps">
+      {{- range . }}<li><strong>{{ .title }}</strong>{{ with .detail }} — {{ . }}{{ end }}{{ with .command }}<br><code>{{ . }}</code>{{ end }}</li>{{ end }}
+    </ol>
+    {{- end }}
+  {{- end }}
+
+  {{- with $d.verify }}
+  <h2 class="ps-h">Verify this yourself</h2>
+  <ol class="ps-steps">
+    {{- range . }}<li><a href="{{ .url }}" rel="noopener">{{ .label }}</a>{{ with .detail }} — {{ . }}{{ end }}</li>{{ end }}
+  </ol>
+  {{- end }}
+
+  {{- with $d.sources }}
+  <h2 class="ps-h">Official sources</h2>
+  <ul class="ps-src">
+    {{- range . }}<li><a href="{{ .url }}" rel="noopener">{{ .name }}</a>{{ with .note }} — {{ . }}{{ end }}</li>{{ end }}
+  </ul>
+  {{- end }}
+
+{{- else -}}
+  <div class="ps-card">
+    {{- if eq $status "announced" }}
+      <span class="ps-pill ps-pill--warn">under verification</span>
+    {{- else }}
+      <span class="ps-pill">not yet published</span>
+    {{- end }}
+    <p class="ps-msg">{{ $d.message | default "No official burn specification has been published yet." }}</p>
+    {{- with $d.expect }}
+      <p class="ps-note">What to expect when it lands: {{ with .ratio }}{{ . }}{{ end }}{{ with .mainnet }} · {{ . }}{{ end }}{{ with .note }} · {{ . }}{{ end }}</p>
+    {{- end }}
+  </div>
+
+  {{- with $d.announcement }}
+  <div class="ps-warn">
+    <p><strong>An announcement matching the burn spec has appeared — not yet verified against an official source. Do not act on it.</strong></p>
+    {{- with .quote }}<p>“{{ . }}”</p>{{ end }}
+    {{- with .date }}<p>Reported: {{ . }}</p>{{ end }}
+    {{- with .source_url }}<p>Seen at: <a href="{{ . }}" rel="noopener">{{ . }}</a></p>{{ end }}
+    <p>This page switches to the full guide only after the claim is confirmed on an official source.</p>
+  </div>
+  {{- end }}
+{{- end -}}
+
+{{- if $d.sources }}
+<p class="ps-meta">Monitoring, every 12 hours:
+{{- range $i, $s := $d.sources }}{{ if $i }},{{ end }} <a href="{{ $s.url }}" rel="noopener">{{ $s.name }}</a>{{ end }}.
+Last checked {{ $checked }}{{ with $changed }} · state unchanged since {{ . }}{{ end }}.</p>
+{{- end }}
+{{- with $d.history }}
+<h2 class="ps-h">Change log</h2>
+<ul class="ps-hist">
+  {{- range . }}<li>{{ .date }} — {{ .note }}</li>{{ end }}
+</ul>
+{{- end }}
+</div>
+{{- end -}}
