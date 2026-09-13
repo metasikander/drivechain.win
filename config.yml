@@ -6,7 +6,7 @@ languageCode: "en-US"
 disableKinds: ["taxonomy", "term", "RSS"]
 
 params:
-  description: "pECX burn status: whether the official eCash (ECX) burn and redemption specification has been published yet, and what to do once it is."
+  description: "Unofficial, AI-written page: whether the official eCash (ECX) burn and redemption specification has been published yet, and what to do once it is. Verify everything at the source."
   contact: "contact@drivechain.win"
   rawStatePath: "/pecx_burn.json"   # the JSON the watcher cron job maintains
 
