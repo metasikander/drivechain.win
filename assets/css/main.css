@@ -507,6 +507,25 @@ kbd {
   font-weight: 600;
 }
 
+.section__note {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+  margin: 0.9rem 0 0;
+  max-width: var(--measure);
+}
+
+.quote {
+  margin: 0 0 0.9rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--accent-line);
+  font-style: italic;
+  color: var(--ink-dim);
+  max-width: var(--measure);
+}
+
 /* changelog */
 .log {
   list-style: none;

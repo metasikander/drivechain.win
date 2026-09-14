@@ -9,6 +9,8 @@
 {{- $checked := "" -}}{{- with $d.last_checked }}{{ $checked = (time.AsTime .).Format "2 Jan 2006 15:04 MST" }}{{ end -}}
 {{- $changed := "" -}}{{- with $d.last_change }}{{ $changed = (time.AsTime .).Format "2 Jan 2006 15:04 MST" }}{{ end -}}
 {{- $cadence := $d.cadence | default "3 hours" -}}
+{{- $mon := $d.monitoring | default dict -}}
+{{- $manual := eq (index ($mon | default dict) "mode" | default "") "manual" -}}
 {{- $label := "Not yet published" -}}
 {{- if eq $status "announced" }}{{ $label = "Announcement under verification" }}{{ end -}}
 {{- if eq $status "published" }}{{ $label = "Spec published" }}{{ end -}}
@@ -19,7 +21,8 @@
       <div><dt>Status</dt><dd><span class="dot dot--{{ $status }}"></span><b>{{ $label }}</b></dd></div>
       <div><dt>Last checked</dt><dd>{{ $checked | default "unknown" }}</dd></div>
       {{- with $changed }}<div><dt>Unchanged since</dt><dd>{{ . }}</dd></div>{{ end }}
-      {{- with $d.sources }}<div><dt>Watching</dt><dd>{{ len . }} sources</dd></div>{{ end }}
+      {{- with $d.sources }}<div><dt>Sources</dt><dd>{{ len . }} watched</dd></div>{{ end }}
+      <div><dt>Updated</dt><dd>{{ if $manual }}By hand{{ else }}Automatically, every {{ $cadence }}{{ end }}</dd></div>
       {{- with $d.spec }}{{ with .source_url }}<div><dt>Source</dt><dd>{{ (urls.Parse .).Host }}</dd></div>{{ end }}{{ end }}
     </dl>
   </aside>
@@ -72,9 +75,19 @@
           {{- with .mainnet }}<tr><th scope="row">Mainnet</th><td>{{ . }}</td></tr>{{ end }}
           {{- with .payout }}<tr><th scope="row">Payout</th><td>{{ . }}</td></tr>{{ end }}
           {{- with .published_on }}<tr><th scope="row">Published</th><td>{{ . }}</td></tr>{{ end }}
-          {{- with .source_url }}<tr><th scope="row">Source</th><td><a href="{{ . }}" rel="noopener">{{ . }}</a></td></tr>{{ end }}
+          {{- with .source_url }}<tr><th scope="row">Source</th><td><a href="{{ . }}" rel="noopener">{{ . }}</a></td></tr>
+          {{- else }}{{ with .source_note }}<tr><th scope="row">Source</th><td>{{ . }}</td></tr>{{ end }}{{ end }}
           </tbody>
         </table>
+      </section>
+      {{- end }}
+
+      {{- with $d.announcement }}
+      <section>
+        <h2 class="section__title">The announcement</h2>
+        {{- with .quote }}<blockquote class="quote">{{ . }}</blockquote>{{ end }}
+        {{- with .source_note }}<p class="section__note">{{ . }}</p>{{ end }}
+        {{- with .date }}<p class="section__note">Announced {{ . }}</p>{{ end }}
       </section>
       {{- end }}
 
@@ -119,12 +132,13 @@
 
     {{- with $d.sources }}
     <section>
-      <h2 class="section__title">Sources watched, every {{ $cadence }}</h2>
+      <h2 class="section__title">Sources</h2>
       <ul class="sources">
         {{- range . }}
         <li><a href="{{ .url }}" rel="noopener nofollow">{{ .name }}</a>{{ with .note }}<span>{{ . }}</span>{{ end }}</li>
         {{- end }}
       </ul>
+      {{- with $mon }}{{ with .note }}<p class="section__note">{{ . }}</p>{{ end }}{{ end }}
     </section>
     {{- end }}
 
