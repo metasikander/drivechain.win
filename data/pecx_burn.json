@@ -1,12 +1,17 @@
 {
   "schema": 1,
-  "status": "waiting",
-  "last_checked": "2026-09-14T01:54:32Z",
-  "last_change": "2026-09-13T19:42:53Z",
-  "headline": "No official burn specification has been published.",
-  "message": "There is no official pECX burn address, redemption specification or conversion instruction yet. Redemption into ECX happens at mainnet (around 31 October 2026). Anything claiming otherwise — a \"burn address\" posted in a chat, a DM, or an unofficial site — should be treated as a scam until it appears on the official sources listed below.",
+  "status": "published",
+  "last_checked": "2026-09-14T06:30:00Z",
+  "last_change": "2026-09-14T06:27:03Z",
+  "cadence": "by hand",
+  "monitoring": {
+    "mode": "manual",
+    "note": "The automated watcher was stopped on 14 September 2026 — none of the sources it could read ever carried this. The page is updated by hand from here on."
+  },
+  "headline": "The burn mechanism has been announced — but not published as a specification.",
+  "message": "Paul Sztorc described the pECX redemption burn in the Drivechain Talk Telegram group on 14 September 2026: send the pECX to the Bitcoin eater address in a transaction that also carries a 0-valued OP_RETURN naming an address you control, and send more than the 1,000 pECX threshold. It is a chat answer, not a document — no official specification page exists for it yet, and wallet support is still being written.",
   "expect": {
-    "ratio": "1,000 pECX = 10 ECX (100:1)",
+    "ratio": "1,000 pECX = 10 ECX (100:1) — stated earlier, not in this announcement",
     "mainnet": "~31 October 2026, BTC block ~973,728",
     "note": "Balances may not carry over from alpha to beta."
   },
@@ -42,8 +47,98 @@
       "note": "telegram (unverified)"
     }
   ],
-  "announcement": null,
-  "spec": null,
-  "history": [],
-  "cadence": "3 hours"
+  "announcement": {
+    "source_url": "",
+    "source_note": "Drivechain Talk (Telegram, private supergroup) — Paul Sztorc, 14 Sep 2026 01:22 UTC, confirmed by him at 01:25 UTC (\"Yes that's the one\"). Message ids 250407, 250411, 250412, from the group export of 14 September 2026.",
+    "quote": "1. Send to 1BitcoinEaterDontSendxxx  2. Add a 0-valued op return, to an address A that you have the key for. The coins will go to address A. As long as there is more than the threshold (1000).",
+    "date": "2026-09-14",
+    "official": false,
+    "verification": "confirmed"
+  },
+  "published_override": {
+    "by": "sikander (site owner)",
+    "at": "2026-09-14T06:30:00Z",
+    "reason": "Hand-published on the owner's instruction from the Telegram export of Drivechain Talk. The source is the project lead in the project's own group, not an official-domain document, so the automated allowlist would refuse it."
+  },
+  "spec": {
+    "burn_address": "1BitcoinEaterAddressDontSendf59kuE",
+    "network": "pECX on the ECX alpha chain",
+    "minimum": "More than 1,000 pECX",
+    "payout": "ECX to the address carried in the 0-valued OP_RETURN",
+    "deadline": "Not stated in the announcement — burn before ECX mainnet",
+    "mainnet": "~31 October 2026, BTC block ~973,728",
+    "published_on": "2026-09-14",
+    "source_url": "",
+    "source_note": "Telegram: Drivechain Talk, 14 Sep 2026. No official document or web page for this exists yet.",
+    "guide": [
+      {
+        "title": "Confirm you hold more than the threshold",
+        "detail": "The burn only counts above 1,000 pECX. A balance just over the threshold qualifies, but do not burn more than you would accept losing."
+      },
+      {
+        "title": "Build a transaction with only two outputs",
+        "detail": "Paul: \"Better if the txn has only two outputs\" — the payment to the burner, and the OP_RETURN. Nothing else."
+      },
+      {
+        "title": "Send the pECX to the burn address",
+        "detail": "The standard Bitcoin eater address: valid base58, and 5,640 transactions have gone into it on BTC with zero ever spent out."
+      },
+      {
+        "title": "Put a 0-valued OP_RETURN in it, naming an address you control",
+        "detail": "That address is where the ECX will be paid at mainnet, so it must be one you hold the key for. This is the part to get exactly right."
+      },
+      {
+        "title": "Keep the txid",
+        "detail": "It is the proof of the burn, the thing tooling will read, and your tax record."
+      },
+      {
+        "title": "Wait for the tooling",
+        "detail": "Paul said he will add this to BitWindow, \"probably under the redeem investor code part\". No released wallet has a button for it yet, so a hand-built transaction is currently the only route."
+      }
+    ]
+  },
+  "warnings": [
+    "Burning is irreversible. The eater address has no private key by design — those pECX are gone.",
+    "The payout address goes inside the OP_RETURN. Get it wrong and the ECX is paid to a key you do not control.",
+    "This came out of a Telegram chat, not a published specification. There is no official document, no wallet support, and the terms could still change.",
+    "The conversion ratio is NOT in this announcement. Earlier statements put it at 100:1 (1,000 pECX = 10 ECX) — ask before burning anything you would miss.",
+    "Alpha and beta balances may not carry over. Make sure you are burning the pECX you mean to, on the right stage of the fork.",
+    "Nobody legitimate needs your seed phrase or private key to help you redeem. Anyone who asks is robbing you."
+  ],
+  "verify": [
+    {
+      "label": "BitWindow — the wallet this will land in",
+      "url": "https://github.com/LayerTwo-Labs/bitwindow",
+      "detail": "watch for the \"redeem investor code\" work"
+    },
+    {
+      "label": "LayerTwo-Labs repositories",
+      "url": "https://github.com/orgs/LayerTwo-Labs/repositories",
+      "detail": "the code, and any spec that gets committed"
+    },
+    {
+      "label": "drivechain.info/dev.txt",
+      "url": "https://drivechain.info/dev.txt",
+      "detail": "Paul's own fast-info file — still dated 19 Feb 2026, no burn section"
+    },
+    {
+      "label": "ecash.com",
+      "url": "https://ecash.com",
+      "detail": "still carries nothing about the burn"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-09-14",
+      "note": "Specification published; page switched to the conversion guide."
+    },
+    {
+      "date": "2026-09-14",
+      "note": "Burn mechanism stated by Paul Sztorc in the Drivechain Talk Telegram group; page switched to the guide by hand."
+    },
+    {
+      "date": "2026-09-14",
+      "note": "Automated watcher stopped — the sources it was pointed at never carried this."
+    }
+  ]
 }
