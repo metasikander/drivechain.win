@@ -1,17 +1,17 @@
 {
   "schema": 1,
   "status": "published",
-  "last_checked": "2026-09-14T06:30:00Z",
-  "last_change": "2026-09-14T06:27:03Z",
+  "last_checked": "2026-09-15T08:10:00Z",
+  "last_change": "2026-09-15T07:10:03Z",
   "cadence": "by hand",
   "monitoring": {
     "mode": "manual",
-    "note": "The automated watcher was stopped on 14 September 2026 — none of the sources it could read ever carried this. The page is updated by hand from here on."
+    "note": "The automated watcher was stopped on 14 September 2026 — none of the sources it could read ever carried this. Updated by hand."
   },
-  "headline": "The burn mechanism has been announced — but not published as a specification.",
-  "message": "Paul Sztorc described the pECX redemption burn in the Drivechain Talk Telegram group on 14 September 2026: send the pECX to the Bitcoin eater address in a transaction that also carries a 0-valued OP_RETURN naming an address you control, and send more than the 1,000 pECX threshold. It is a chat answer, not a document — no official specification page exists for it yet, and wallet support is still being written.",
+  "headline": "Burn pECX from BitWindow — and do it before the Alphanet stops.",
+  "message": "The burn is implemented in BitWindow: on Alphanet, the Receive page carries a Burn Transaction card. Send more than 1,000 pECX to the Bitcoin eater address, and the wallet puts its own first address in the OP_RETURN — that address receives 1/100 of what you burn as real ECX at mainnet, rounded up. The Alphanet is being retired this week, so anyone holding pECX there has to act.",
   "expect": {
-    "ratio": "1,000 pECX = 10 ECX (100:1) — stated earlier, not in this announcement",
+    "ratio": "1/100, rounded up — burn 1,013 → 10.13 ECX",
     "mainnet": "~31 October 2026, BTC block ~973,728",
     "note": "Balances may not carry over from alpha to beta."
   },
@@ -19,7 +19,7 @@
     {
       "name": "drivechain.info/dev.txt",
       "url": "https://drivechain.info/dev.txt",
-      "note": "canonical fast-info file"
+      "note": "Paul's fast-info file — still dated 19 Feb 2026"
     },
     {
       "name": "ecash.com",
@@ -32,24 +32,24 @@
       "note": "alphanet hub"
     },
     {
+      "name": "LayerTwo-Labs/drivechain-frontends",
+      "url": "https://github.com/LayerTwo-Labs/drivechain-frontends",
+      "note": "the code that implements this"
+    },
+    {
       "name": "ecashblog.com",
       "url": "https://ecashblog.com/rss.xml",
       "note": "community blog"
     },
     {
-      "name": "github.com/ecash-com",
-      "url": "https://github.com/orgs/ecash-com/repositories",
-      "note": "official repos"
-    },
-    {
       "name": "t.me/s/DcInsiders",
       "url": "https://t.me/s/DcInsiders",
-      "note": "telegram (unverified)"
+      "note": "telegram (unreadable via /s/)"
     }
   ],
   "announcement": {
     "source_url": "",
-    "source_note": "Drivechain Talk (Telegram, private supergroup) — Paul Sztorc, 14 Sep 2026 01:22 UTC, confirmed by him at 01:25 UTC (\"Yes that's the one\"). Message ids 250407, 250411, 250412, from the group export of 14 September 2026.",
+    "source_note": "Drivechain Talk (Telegram, private supergroup) — Paul Sztorc, 14 Sep 2026 01:22 UTC, confirmed by him at 01:25 UTC (\"Yes that's the one\"); message ids 250407, 250411, 250412. Ratio and minimum were restated in the same group on 15 Sep (\"confirmed that you will get 10 ECX for every 1000 alpha pECX, as long as you burn at least 1000\"), and the numbers below were then verified against the implementation itself.",
     "quote": "1. Send to 1BitcoinEaterDontSendxxx  2. Add a 0-valued op return, to an address A that you have the key for. The coins will go to address A. As long as there is more than the threshold (1000).",
     "date": "2026-09-14",
     "official": false,
@@ -58,79 +58,98 @@
   "published_override": {
     "by": "sikander (site owner)",
     "at": "2026-09-14T06:30:00Z",
-    "reason": "Hand-published on the owner's instruction from the Telegram export of Drivechain Talk. The source is the project lead in the project's own group, not an official-domain document, so the automated allowlist would refuse it."
+    "reason": "Hand-published on the owner's instruction from the Telegram exports of Drivechain Talk. The source is the project lead in the project's own group plus the wallet implementation, not an official-domain document, so the automated allowlist would refuse it."
   },
   "spec": {
     "burn_address": "1BitcoinEaterAddressDontSendf59kuE",
-    "network": "pECX on the ECX alpha chain",
-    "minimum": "More than 1,000 pECX",
-    "payout": "ECX to the address carried in the 0-valued OP_RETURN",
-    "deadline": "Not stated in the announcement — burn before ECX mainnet",
-    "mainnet": "~31 October 2026, BTC block ~973,728",
-    "published_on": "2026-09-14",
+    "network": "pECX on the ECX Alphanet — the burn card only exists on Alphanet",
+    "ratio": "1/100 of what you burn, rounded up to a whole ECX satoshi: 1,000 → 10 ECX, 1,013 → 10.13 ECX",
+    "minimum": "Strictly more than 1,000 pECX. Exactly 1,000 is rejected.",
+    "deadline": "Before the Alphanet stops — expected this week",
+    "mainnet": "ECX mainnet ~31 October 2026 (BTC block ~973,728); Beta soon after the next BTC difficulty adjustment",
+    "payout": "The OP_RETURN carries the wallet's own first address, and the ECX credit lands there. BitWindow fills it in — you do not type an address.",
+    "published_on": "2026-09-15",
     "source_url": "",
-    "source_note": "Telegram: Drivechain Talk, 14 Sep 2026. No official document or web page for this exists yet.",
+    "source_note": "Verified against the implementation: ECXBurnAddress, ECXBurnMinimumSats = 100,000,000,000 sat and ECXCreditSats = ceil(burn/100) in sidechain-orchestrator/wallet/ecx_burn.go. No official document exists.",
     "guide": [
       {
-        "title": "Confirm you hold more than the threshold",
-        "detail": "The burn only counts above 1,000 pECX. A balance just over the threshold qualifies, but do not burn more than you would accept losing."
+        "title": "Update BitWindow and switch to Alphanet",
+        "detail": "The card only appears when the current network is eCash/Alphanet; on any other network it is hidden entirely. LayerTwo ships through Sparkle, not GitHub releases, so update from inside the app."
       },
       {
-        "title": "Build a transaction with only two outputs",
-        "detail": "Paul: \"Better if the txn has only two outputs\" — the payment to the burner, and the OP_RETURN. Nothing else."
+        "title": "Select an Electrum wallet and unlock it",
+        "detail": "The burn refuses Core wallets, watch-only wallets and single-sig hardware wallets (\"This wallet cannot sign this burn. Select a software wallet with its private key.\"). Multisig can burn, but only through the CLI with --psbt-out so cosigners can sign."
       },
       {
-        "title": "Send the pECX to the burn address",
-        "detail": "The standard Bitcoin eater address: valid base58, and 5,640 transactions have gone into it on BTC with zero ever spent out."
+        "title": "Go to Wallet → Receive",
+        "detail": "The Burn Transaction card sits under the receive QR on Alphanet. The Claim card on the same page is a different feature for investor keys — don't mix them up."
       },
       {
-        "title": "Put a 0-valued OP_RETURN in it, naming an address you control",
-        "detail": "That address is where the ECX will be paid at mainnet, so it must be one you hold the key for. This is the part to get exactly right."
+        "title": "Enter an amount above 1,000",
+        "detail": "Up to 8 decimals. 1,000 exactly is rejected: \"The amount must exceed 1,000.00000000 ECX.\" There are no increments — the credit is pro-rata, so 1,013 is credited as 10.13 ECX."
       },
       {
-        "title": "Keep the txid",
-        "detail": "It is the proof of the burn, the thing tooling will read, and your tax record."
+        "title": "Read both output panels before signing",
+        "detail": "\"To BitcoinEater\" must be your amount to 1BitcoinEaterAddressDontSendf59kuE with 0-value OP_RETURN. The card tells you plainly: \"You will receive 1/100 of the amount you burn as real ECX at this address\" and \"The address used is the first address of this wallet.\" Don't burn from a wallet whose first address you can't reach later — there is no way to change it in the GUI. The CLI takes no address either."
       },
       {
-        "title": "Wait for the tooling",
-        "detail": "Paul said he will add this to BitWindow, \"probably under the redeem investor code part\". No released wallet has a button for it yet, so a hand-built transaction is currently the only route."
+        "title": "Press Burn Transaction, then keep the txid",
+        "detail": "BitWindow signs, finalizes and broadcasts, then shows the txid and an explorer link with \"Your real ECX credit remains pending.\" That txid is your proof of burn and your tax record."
+      },
+      {
+        "title": "Prefer a terminal? The same node offers the CLI",
+        "detail": "drivechain-cli wallet burn-ecx --sats <alphanet-sats>, with --preview to see the transaction without signing, --yes to skip the prompt, and --psbt-in/--psbt-out for multisig. 1,000 pECX = 100,000,000,000 sats, and the amount must exceed it."
       }
     ]
   },
   "warnings": [
     "Burning is irreversible. The eater address has no private key by design — those pECX are gone.",
-    "The payout address goes inside the OP_RETURN. Get it wrong and the ECX is paid to a key you do not control.",
-    "This came out of a Telegram chat, not a published specification. There is no official document, no wallet support, and the terms could still change.",
-    "The conversion ratio is NOT in this announcement. Earlier statements put it at 100:1 (1,000 pECX = 10 ECX) — ask before burning anything you would miss.",
-    "Alpha and beta balances may not carry over. Make sure you are burning the pECX you mean to, on the right stage of the fork.",
+    "You need MORE than 1,000 pECX. Exactly 1,000 is rejected by the wallet, and there is no way to send a top-up to reach the threshold afterwards.",
+    "The credit address is the first address of the wallet you burn from. If you cannot sign for that address later, you cannot reach your ECX. There is no field to enter a different one.",
+    "If you are burning through the CLI instead of the GUI, the same constraint applies: the OP_RETURN address is derived by the wallet, not chosen by you.",
+    "The Alphanet is being retired this week. Anything left on it after it stops is not redeemable — burning is only one of the three options, the others being selling and wrapping.",
+    "This came out of a Telegram chat. There is still no official specification document. Verify the numbers against the implementation or ask before moving anything you would miss.",
     "Nobody legitimate needs your seed phrase or private key to help you redeem. Anyone who asks is robbing you."
   ],
   "verify": [
     {
-      "label": "BitWindow — the wallet this will land in",
-      "url": "https://github.com/LayerTwo-Labs/bitwindow",
-      "detail": "watch for the \"redeem investor code\" work"
+      "label": "The constants: burn address, minimum, credit maths",
+      "url": "https://github.com/LayerTwo-Labs/drivechain-frontends/blob/master/sidechain-orchestrator/wallet/ecx_burn.go",
+      "detail": "ECXBurnAddress, ECXBurnMinimumSats, ECXCreditSats = ceil(burn/100)"
     },
     {
-      "label": "LayerTwo-Labs repositories",
-      "url": "https://github.com/orgs/LayerTwo-Labs/repositories",
-      "detail": "the code, and any spec that gets committed"
+      "label": "The BitWindow burn card and its wording",
+      "url": "https://github.com/LayerTwo-Labs/drivechain-frontends/blob/master/bitwindow/lib/widgets/burn_ecx_card.dart",
+      "detail": "this is the UI described above"
+    },
+    {
+      "label": "The CLI command and its preconditions",
+      "url": "https://github.com/LayerTwo-Labs/drivechain-frontends/blob/master/sidechain-orchestrator/commands/wallet_burn_ecx.go",
+      "detail": "Alphanet only, Electrum wallet, amount must exceed the minimum"
     },
     {
       "label": "drivechain.info/dev.txt",
       "url": "https://drivechain.info/dev.txt",
-      "detail": "Paul's own fast-info file — still dated 19 Feb 2026, no burn section"
+      "detail": "still dated 19 Feb 2026 — the burn is not documented here"
     },
     {
       "label": "ecash.com",
       "url": "https://ecash.com",
-      "detail": "still carries nothing about the burn"
+      "detail": "carries nothing about the burn either"
     }
   ],
   "history": [
     {
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "note": "Specification published; page switched to the conversion guide."
+    },
+    {
+      "date": "2026-09-15",
+      "note": "Ratio and minimum restated in the group; both verified against the wallet code. Guide rewritten around the BitWindow burn card."
+    },
+    {
+      "date": "2026-09-15",
+      "note": "Alphanet retirement announced: \"alphanet stops this week\" — burn, sell, or wrap before it does."
     },
     {
       "date": "2026-09-14",
@@ -138,7 +157,7 @@
     },
     {
       "date": "2026-09-14",
-      "note": "Automated watcher stopped — the sources it was pointed at never carried this."
+      "note": "Automated watcher stopped — the sources it was pointed at never carried any of this."
     }
   ]
 }
