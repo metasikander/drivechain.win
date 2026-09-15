@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "status": "published",
-  "last_checked": "2026-09-15T08:10:00Z",
-  "last_change": "2026-09-15T07:10:03Z",
+  "last_checked": "2026-09-15T08:40:00Z",
+  "last_change": "2026-09-15T07:19:50Z",
   "cadence": "by hand",
   "monitoring": {
     "mode": "manual",
@@ -73,42 +73,25 @@
     "source_note": "Verified against the implementation: ECXBurnAddress, ECXBurnMinimumSats = 100,000,000,000 sat and ECXCreditSats = ceil(burn/100) in sidechain-orchestrator/wallet/ecx_burn.go. No official document exists.",
     "guide": [
       {
-        "title": "Update BitWindow and switch to Alphanet",
-        "detail": "The card only appears when the current network is eCash/Alphanet; on any other network it is hidden entirely. LayerTwo ships through Sparkle, not GitHub releases, so update from inside the app."
+        "title": "Update BitWindow, and be on Alphanet",
+        "detail": "The burn is new, so an older build does not have it — update from inside the app (LayerTwo ships through Sparkle, not GitHub releases). The card only exists on Alphanet; on any other network it is not shown at all."
       },
       {
-        "title": "Select an Electrum wallet and unlock it",
-        "detail": "The burn refuses Core wallets, watch-only wallets and single-sig hardware wallets (\"This wallet cannot sign this burn. Select a software wallet with its private key.\"). Multisig can burn, but only through the CLI with --psbt-out so cosigners can sign."
+        "title": "Go to Wallet → Receive, with an Electrum wallet selected and unlocked",
+        "detail": "It must be a wallet holding its own private key: BitWindow refuses Core wallets, watch-only wallets and hardware wallets — \"This wallet cannot sign this burn. Select a software wallet with its private key.\" The Burn Transaction card sits below the receive QR."
       },
       {
-        "title": "Go to Wallet → Receive",
-        "detail": "The Burn Transaction card sits under the receive QR on Alphanet. The Claim card on the same page is a different feature for investor keys — don't mix them up."
-      },
-      {
-        "title": "Enter an amount above 1,000",
-        "detail": "Up to 8 decimals. 1,000 exactly is rejected: \"The amount must exceed 1,000.00000000 ECX.\" There are no increments — the credit is pro-rata, so 1,013 is credited as 10.13 ECX."
-      },
-      {
-        "title": "Read both output panels before signing",
-        "detail": "\"To BitcoinEater\" must be your amount to 1BitcoinEaterAddressDontSendf59kuE with 0-value OP_RETURN. The card tells you plainly: \"You will receive 1/100 of the amount you burn as real ECX at this address\" and \"The address used is the first address of this wallet.\" Don't burn from a wallet whose first address you can't reach later — there is no way to change it in the GUI. The CLI takes no address either."
-      },
-      {
-        "title": "Press Burn Transaction, then keep the txid",
-        "detail": "BitWindow signs, finalizes and broadcasts, then shows the txid and an explorer link with \"Your real ECX credit remains pending.\" That txid is your proof of burn and your tax record."
-      },
-      {
-        "title": "Prefer a terminal? The same node offers the CLI",
-        "detail": "drivechain-cli wallet burn-ecx --sats <alphanet-sats>, with --preview to see the transaction without signing, --yes to skip the prompt, and --psbt-in/--psbt-out for multisig. 1,000 pECX = 100,000,000,000 sats, and the amount must exceed it."
+        "title": "Enter the amount, read the two panels, press Burn Transaction",
+        "detail": "Up to 8 decimals, and it must exceed 1,000. BitWindow then shows Alphanet → Real ECX (what you give up, what you get) and the outputs: your amount to the eater address, plus a 0-value OP_RETURN carrying your wallet's first address. Press Burn Transaction, and keep the txid it returns — that is your proof of burn."
       }
     ]
   },
   "warnings": [
-    "Burning is irreversible. The eater address has no private key by design — those pECX are gone.",
-    "You need MORE than 1,000 pECX. Exactly 1,000 is rejected by the wallet, and there is no way to send a top-up to reach the threshold afterwards.",
-    "The credit address is the first address of the wallet you burn from. If you cannot sign for that address later, you cannot reach your ECX. There is no field to enter a different one.",
-    "If you are burning through the CLI instead of the GUI, the same constraint applies: the OP_RETURN address is derived by the wallet, not chosen by you.",
-    "The Alphanet is being retired this week. Anything left on it after it stops is not redeemable — burning is only one of the three options, the others being selling and wrapping.",
-    "This came out of a Telegram chat. There is still no official specification document. Verify the numbers against the implementation or ask before moving anything you would miss.",
+    "It cannot be undone. The eater address has no private key, by design — those pECX are gone, and what comes back is the credit at mainnet, nothing else.",
+    "1,000 is not enough. The threshold is exclusive: burning exactly 1,000 gets you nothing, and there is no topping up afterwards.",
+    "Your ECX is credited to your wallet's first address — you never type a payout address. If you cannot sign for that address later you cannot reach the ECX, so don't burn from a wallet you are about to throw away.",
+    "The Alphanet is being retired this week. Anything left on it after it stops is not redeemable.",
+    "This came out of a Telegram chat; there is still no official specification document. Ask before moving anything you would miss.",
     "Nobody legitimate needs your seed phrase or private key to help you redeem. Anyone who asks is robbing you."
   ],
   "verify": [
@@ -142,6 +125,10 @@
     {
       "date": "2026-09-15",
       "note": "Specification published; page switched to the conversion guide."
+    },
+    {
+      "date": "2026-09-15",
+      "note": "Guide reduced to the three BitWindow steps; the CLI route is no longer part of it."
     },
     {
       "date": "2026-09-15",
