@@ -477,6 +477,39 @@ kbd {
   text-align: right;
 }
 
+/* a source with no URL of its own (a dated chat message, say) */
+.sources__name {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+}
+
+/* sources are grouped by where they came from */
+.source-group {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 1.4rem 0 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.section__title + .source-group { margin-top: 0.6rem; }
+
+/* a footnote under a fact or a rail value */
+.note {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+
+.rail dd .note { font-size: 0.65rem; }
+
 /* disclaimer — boxed and coloured so it is actually read */
 .disclaimer {
   border: 1px solid var(--accent-line);
