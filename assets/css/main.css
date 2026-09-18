@@ -440,6 +440,47 @@ kbd {
 
 .steps code { display: inline-block; margin-top: 0.35rem; }
 
+/* a reference list, not a sequence: same rhythm as .steps, no numbers */
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: var(--measure);
+}
+
+.items li {
+  position: relative;
+  padding: 0.85rem 0 0.9rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.items strong { font-weight: 600; }
+
+/* the audience index above the betanet sections */
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1.1rem;
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+}
+
+.jump__label {
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6875rem;
+}
+
+.jump a { text-decoration: none; }
+.jump a:hover { color: var(--ink); text-decoration: underline; }
+
 /* sources */
 .sources {
   list-style: none;

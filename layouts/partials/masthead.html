@@ -4,7 +4,7 @@
     {{- if not .IsHome }}<a href="{{ "/" | relURL }}">Home</a>{{ end }}
     {{- if ne .RelPermalink "/burn/" }}<a href="{{ "burn/" | relURL }}">The burn</a>{{ end }}
     {{- if ne .RelPermalink "/betanet/" }}<a href="{{ "betanet/" | relURL }}">The betanet</a>{{ end }}
-    {{- with site.Params.rawStatePath }}<a href="{{ . | relURL }}">Raw state (JSON)</a>{{ end }}
+    {{- with site.Params.rawStatePath }}<a href="{{ . | relURL }}">Burn data (JSON)</a>{{ end }}
     {{- with site.Params.contact }}<a href="mailto:{{ . }}">Contact</a>{{ end }}
   </nav>
 </header>

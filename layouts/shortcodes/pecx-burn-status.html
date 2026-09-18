@@ -1,5 +1,7 @@
-{{- /* Renders the pECX burn-spec status from data/pecx_burn.json.
+{{- /* Renders the pECX burn notice from data/pecx_burn.json.
        States: waiting | announced | published.
+       Order matters: the safety box, then the irreversible-loss warnings, then the
+       procedure — the specification and the announcement are background and come after.
        Written by the burn-spec watcher cron job; see the pecx-burn-status-page skill. */ -}}
 {{- $d := site.Data.pecx_burn -}}
 {{- if not $d -}}
@@ -13,7 +15,7 @@
 {{- $manual := eq (index ($mon | default dict) "mode" | default "") "manual" -}}
 {{- $label := "Not yet published" -}}
 {{- if eq $status "announced" }}{{ $label = "Announcement under verification" }}{{ end -}}
-{{- if eq $status "published" }}{{ $label = "Spec published" }}{{ end -}}
+{{- if eq $status "published" }}{{ $label = "Procedure verified in code" }}{{ end -}}
 <div class="notice" data-state="{{ $status }}">
 
   <aside class="rail">
@@ -21,7 +23,7 @@
       <div><dt>Status</dt><dd><span class="dot dot--{{ $status }}"></span><b>{{ $label }}</b></dd></div>
       <div><dt>Last checked</dt><dd>{{ $checked | default "unknown" }}</dd></div>
       {{- with $changed }}<div><dt>Unchanged since</dt><dd>{{ . }}</dd></div>{{ end }}
-      {{- with $d.sources }}<div><dt>Sources</dt><dd>{{ len . }} watched</dd></div>{{ end }}
+      {{- with $d.sources }}<div><dt>Sources</dt><dd>{{ len . }} {{ if $manual }}listed{{ else }}watched{{ end }}</dd></div>{{ end }}
       <div><dt>Updated</dt><dd>{{ if $manual }}By hand{{ else }}Automatically, every {{ $cadence }}{{ end }}</dd></div>
       {{- with $d.spec }}{{ with .source_url }}<div><dt>Source</dt><dd>{{ (urls.Parse .).Host }}</dd></div>{{ end }}{{ end }}
     </dl>
@@ -62,9 +64,28 @@
     {{- end }}
 
     {{- if eq $status "published" }}
+
+      {{- with $d.warnings }}
+      <div class="block block--warn">
+        <p class="block__title">Read before you burn</p>
+        {{- range . }}<p>{{ . }}</p>{{ end }}
+      </div>
+      {{- end }}
+
+      {{- with $d.spec }}{{ with .guide }}
+      <section>
+        <h2 class="section__title">How to burn, with BitWindow</h2>
+        <ol class="steps">
+          {{- range . }}
+          <li><strong>{{ .title }}</strong>{{ with .detail }} — {{ . }}{{ end }}{{ with .command }}<br><code>{{ . }}</code>{{ end }}</li>
+          {{- end }}
+        </ol>
+      </section>
+      {{- end }}{{ end }}
+
       {{- with $d.spec }}
       <section>
-        <h2 class="section__title">The specification</h2>
+        <h2 class="section__title">The procedure, as implemented</h2>
         <table class="facts">
           <tbody>
           {{- with .burn_address }}<tr><th scope="row">Burn address</th><td><span class="addr">{{ . }}</span></td></tr>{{ end }}
@@ -84,30 +105,12 @@
 
       {{- with $d.announcement }}
       <section>
-        <h2 class="section__title">The announcement</h2>
+        <h2 class="section__title">Where the procedure came from</h2>
         {{- with .quote }}<blockquote class="quote">{{ . }}</blockquote>{{ end }}
         {{- with .source_note }}<p class="section__note">{{ . }}</p>{{ end }}
         {{- with .date }}<p class="section__note">Announced {{ . }}</p>{{ end }}
       </section>
       {{- end }}
-
-      {{- with $d.warnings }}
-      <div class="block block--warn">
-        <p class="block__title">Read before you burn</p>
-        {{- range . }}<p>{{ . }}</p>{{ end }}
-      </div>
-      {{- end }}
-
-      {{- with $d.spec }}{{ with .guide }}
-      <section>
-        <h2 class="section__title">How to burn, with BitWindow</h2>
-        <ol class="steps">
-          {{- range . }}
-          <li><strong>{{ .title }}</strong>{{ with .detail }} — {{ . }}{{ end }}{{ with .command }}<br><code>{{ . }}</code>{{ end }}</li>
-          {{- end }}
-        </ol>
-      </section>
-      {{- end }}{{ end }}
 
       {{- with $d.verify }}
       <section>

@@ -1,4 +1,4 @@
-{{- /* The landing page: one entry per notice, with its status read live from the
+{{- /* The landing page: one entry per notice, with each status line read live from the
        same data files the subpages render (data/pecx_burn.json, data/betanet.json),
        so nothing here can drift from the pages it links to. */ -}}
 {{- $burn := site.Data.pecx_burn -}}
@@ -6,15 +6,15 @@
 {{- $burnLabel := "Not yet published" -}}
 {{- with $burn -}}
   {{- if eq .status "announced" }}{{ $burnLabel = "Announcement under verification" }}{{ end -}}
-  {{- if eq .status "published" }}{{ $burnLabel = "Spec published" }}{{ end -}}
+  {{- if eq .status "published" }}{{ $burnLabel = "Procedure verified in code" }}{{ end -}}
 {{- end -}}
-{{- $checked := "" -}}
-{{- with $beta }}{{ with .last_checked }}{{ $checked = (time.AsTime .).Format "2 Jan 2006 15:04 MST" }}{{ end }}{{ end -}}
 <div class="notice">
 
   <aside class="rail">
     <dl class="rail__list">
-      <div><dt>Pages</dt><dd><b>2</b> notices</dd></div>
+      <div><dt>Notices</dt><dd><b>2</b></dd></div>
+      {{- with $burn }}<div><dt>Burn</dt><dd>{{ $burnLabel }}</dd></div>{{ end }}
+      {{- with $beta }}{{ with .fork }}<div><dt>Betanet</dt><dd>BTC {{ .height }}</dd></div>{{ end }}{{ end }}
       <div><dt>Updated</dt><dd>By hand</dd></div>
       {{- with site.Params.rawStatePath }}<div><dt>Raw state</dt><dd><a href="{{ . | relURL }}">pecx_burn.json</a></dd></div>{{ end }}
       {{- with site.Params.contact }}<div><dt>Contact</dt><dd><a href="mailto:{{ . }}">{{ . }}</a></dd></div>{{ end }}
@@ -23,25 +23,24 @@
 
   <div class="notice__main">
 
-    <h1 class="headline">Two notices: what to do with pECX, and what the fork does to it.</h1>
-    <p class="lede">Unofficial, AI-written pages about the eCash (ECX) launch — the practice-coin
-      burn on the Alphanet, and the betanet fork. Nothing here is affiliated with the eCash or
-      Drivechain developers, and none of it has been reviewed by anyone.</p>
+    <h1 class="headline">Two notices on the eCash launch, and the sources behind them.</h1>
+    <p class="lede">eCash (ECX) is a hard fork of Bitcoin in three stages — Alpha, betanet, mainnet.
+      This site tracks the two stages that need action: the practice-coin burn on the Alphanet, and
+      the betanet fork at Bitcoin block 967,680. Both notices are written and updated by hand, and
+      every claim on them carries the date and the source it came from.</p>
 
     <ul class="entries">
       <li>
         <a href="{{ "burn/" | relURL }}">
           <span class="entry__kicker">Alphanet · pECX → ECX</span>
-          <span class="entry__title">The burn — BitWindow, and the deadline</span>
+          <span class="entry__title">The burn</span>
           <span class="entry__meta">
             {{- if $burn -}}
               <b>{{ $burnLabel }}</b>
               {{- with $burn.spec -}}
-                {{ with .deadline }} · deadline: {{ . }}{{ end }}{{ with .ratio }}<br>{{ . }}{{ end }}
+                {{ with .deadline_short }} · {{ . }}{{ else }}{{ with .deadline }} · {{ . }}{{ end }}{{ end }}
               {{- else -}}
-                {{- with $burn.expect -}}
-                  {{ with .ratio }}<br>{{ . }}{{ end }}{{ with .mainnet }} · {{ . }}{{ end }}
-                {{- end -}}
+                {{- with $burn.expect }}{{ with .mainnet }} · {{ . }}{{ end }}{{ end -}}
               {{- end -}}
             {{- else -}}burn status data missing{{ end -}}
           </span>
@@ -49,39 +48,42 @@
       </li>
       <li>
         <a href="{{ "betanet/" | relURL }}">
-          <span class="entry__kicker">Betanet · the fork</span>
-          <span class="entry__title">The betanet — forks Bitcoin at block 967,680</span>
+          <span class="entry__kicker">Betanet · the second fork</span>
+          <span class="entry__title">The betanet</span>
           <span class="entry__meta">
             {{- if $beta -}}
-              <b>BTC {{ $beta.fork.height }}</b> · {{ $beta.fork.eta }}{{ with $beta.fork.blocks_away }} · {{ . }} blocks away ({{ $beta.fork.countdown_at }}){{ end }}
+              <b>Forks Bitcoin at block {{ $beta.fork.height }}</b> · {{ $beta.fork.eta }}<br>
+              Practice coins again — alpha balances are abandoned at the fork.
             {{- else -}}betanet data missing{{ end -}}
           </span>
         </a>
       </li>
     </ul>
 
+    <section>
+      <h2 class="section__title">How to read these pages</h2>
+      <dl class="expect">
+        <div><dt>Every claim is dated</dt><dd>Where a number comes from a person in the project's
+          Telegram group rather than from code or a document, the page says so — and so does the
+          source list at the bottom of it.</dd></div>
+        <div><dt>Nothing is watched automatically</dt><dd>No cron job, no API, no feed. The pages are
+          rewritten by hand when something changes, and the timestamp on each one is when that last
+          happened.</dd></div>
+        <div><dt>Check before you act</dt><dd>The pages link the code, the branches and the release
+          server behind every claim. Read those, not this.</dd></div>
+      </dl>
+    </section>
+
     <section class="disclaimer">
       <h2 class="section__title">Disclaimer — read this</h2>
       <p><strong>These pages are vibe-coded.</strong> They were written by an AI agent, nobody has
         reviewed or audited them, and they can be wrong — including about the burn address, the
-        ratios, the deadline, the fork height and the pools.</p>
+        ratios, the deadline, the block height and the pools.</p>
       <p><strong>Do not follow burn, swap, fork or migration guides from random websites, videos,
         chats, DMs or strangers.</strong> A page like this one is exactly what a scam looks like
-        from the outside. Verify every detail against more than one of the official sources listed on
-        each page, and check an address character-for-character before you send anything anywhere.</p>
-      <p>Nothing here is financial advice. Never enter a seed phrase or private key anywhere to
-        &ldquo;receive&rdquo; coins, and be sceptical of anyone who offers to do the work for you.</p>
-    </section>
-
-    <section>
-      <h2 class="section__title">Where the two notices stand</h2>
-      <ul class="sources">
-        <li><a href="{{ "burn/" | relURL }}">The burn</a><span>{{ $burnLabel }}</span></li>
-        <li><a href="{{ "betanet/" | relURL }}">The betanet</a><span>{{ $checked | default "no date" }}</span></li>
-      </ul>
-      <p class="section__note">Both pages are updated by hand from the project's own Telegram group,
-        its code and its release server — there is no watcher job, and no official document behind
-        either of them.</p>
+        from the outside, and nothing here is financial advice.</p>
+      <p>Never enter a seed phrase or private key anywhere to &ldquo;receive&rdquo; coins, and be
+        sceptical of anyone offering to do the work for you.</p>
     </section>
 
   </div>

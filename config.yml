@@ -6,9 +6,9 @@ languageCode: "en-US"
 disableKinds: ["taxonomy", "term", "RSS"]
 
 params:
-  description: "Unofficial, AI-written page: whether the official eCash (ECX) burn and redemption specification has been published yet, and what to do once it is. Verify everything at the source."
+  description: "Unofficial, AI-written notices on the eCash (ECX) launch from Bitcoin: the practice-coin burn on the Alphanet, and the betanet fork at Bitcoin block 967,680. Every claim carries its source; verify everything at the source."
   contact: "contact@drivechain.win"
-  rawStatePath: "/pecx_burn.json"   # the JSON the watcher cron job maintains
+  rawStatePath: "/pecx_burn.json"   # the JSON the burn notice renders at /burn/
 
 # Raw HTML in markdown stays off; the page is rendered by a shortcode instead.
 markup:

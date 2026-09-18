@@ -6,8 +6,8 @@
     "mode": "manual",
     "note": "Written by hand from the Drivechain Talk Telegram group, the betanet branch of ecash-com/bitcoin and BitWindow's own network catalog. There is no watcher job on this page and no official eCash document behind it."
   },
-  "headline": "The betanet forks Bitcoin at block 967,680 — and nothing carries over.",
-  "message": "Stage two of three. Betanet is a fresh chain that forks away from Bitcoin at block 967,680 — the first block of Bitcoin's 480th difficulty period, expected during Saturday 19 September 2026. It issues practice coins (pECX) again: the permanent 1:1 ECX credit for Bitcoin holders still only happens at mainnet, around BTC block 973,728. What changes for anyone who was on the Alphanet is that the Alphanet ends here: those coins are not on the betanet, so the burning, selling or wrapping of alpha pECX has to be finished before the fork block lands.",
+  "headline": "The betanet forks Bitcoin at block 967,680 — and alpha's coins are not on it.",
+  "message": "The second of three stages. The betanet forks away from Bitcoin at block 967,680 — the first block of Bitcoin's 480th difficulty period, expected on Saturday 19 September around 08:00 UTC. It copies Bitcoin's ledger, so the addresses and the keys are Bitcoin's, and it issues practice coins (pECX) again. What it does not carry is anything you did on the Alphanet, which ends at this fork. The permanent 1:1 ECX credit still only happens at mainnet, around block 973,728.",
   "fork": {
     "height": "967,680",
     "height_note": "First block of Bitcoin's 480th difficulty period — 2016 × 480, and consensus.EcashHeight = 967680 in src/kernel/chainparams.cpp on the betanet branch (\"Retarget boundary, 2016 * 480\"). All three eCash stages sit on a difficulty boundary: alpha at 963,648 (478), beta at 967,680 (480), mainnet at 973,728 (483).",
@@ -18,6 +18,20 @@
     "mainnet": "ECX mainnet at BTC block 973,728 — on or around 31 October 2026 (the Bitcoin whitepaper's 18th birthday), or as early as 29 October at the current block pace. That is where the permanent 1:1 ECX balance is credited to every Bitcoin address; 6,204 blocks away at the same reading."
   },
   "facts": [
+    {
+      "k": "Fork block",
+      "v": "Bitcoin block 967,680",
+      "note": "First block of Bitcoin's 480th difficulty period — 2016 × 480, and consensus.EcashHeight = 967680 in src/kernel/chainparams.cpp on the betanet branch (\"Retarget boundary, 2016 * 480\"). All three eCash stages sit on a difficulty boundary: alpha at 963,648 (478), beta at 967,680 (480), mainnet at 973,728 (483)."
+    },
+    {
+      "k": "Expected",
+      "v": "Saturday 19 September 2026, most likely around 08:00 UTC",
+      "note": "The block-height clock is the real one, not the calendar. At 18 September 07:00 UTC Bitcoin stood at 967,524 — 156 blocks, or 26 hours at Bitcoin's current average of 578 s, which puts the fork at about 08:00 UTC on the 19th (up to about 09:00 if blocks slow back to the 600 s target). That matches ecpool.tech's own estimate of ~08:00 UTC; epool.cash's ~13:40 UTC (written on 17 September) is the later end of the same window. Recompute it yourself: today's Bitcoin height, subtracted from 967,680, times ten to twelve minutes."
+    },
+    {
+      "k": "Mainnet",
+      "v": "ECX mainnet at BTC block 973,728 — on or around 31 October 2026 (the Bitcoin whitepaper's 18th birthday), or as early as 29 October at the current block pace. That is where the permanent 1:1 ECX balance is credited to every Bitcoin address; 6,204 blocks away at the same reading."
+    },
     {
       "k": "What it issues",
       "v": "pECX again — practice coins, not the real thing",
@@ -93,7 +107,9 @@
           "title": "The burning window for the alpha move ends with the fork.",
           "detail": "Burn before you switch networks. A burn submitted after the last alpha block stops being mined never gets past the mempool: \"So what happens if you submit the coins for burning, but no block gets mined because everyone moves on to the beta net?\""
         }
-      ]
+      ],
+      "id": "at-the-fork",
+      "nav": "What happens at the fork"
     },
     {
       "title": "If you are holding alpha pECX",
@@ -114,12 +130,15 @@
           "title": "Wrap them into a Solana token.",
           "detail": "A community member offered to peg alpha pECX 1:1 into a Solana token that can be traded in the six weeks before mainnet, with a beta token to follow. This is a third party taking custody, not a protocol feature."
         }
-      ]
+      ],
+      "id": "holding-alpha-pecx",
+      "nav": "I hold alpha pECX"
     },
     {
       "title": "If you are mining",
       "paragraphs": [
-        "The pools are the reason to plan ahead: beta starts at 1e9 difficulty, so early blocks are cheap enough that rented hashrate will chase them — the alpha comparison was a few hundred dollars of rented hash for about 2,000 pECX, and beta pays double on the burn. The pools that switched on at the first instant were taking registrations the day before."
+        "The pools are the reason to plan ahead: the first betanet block is pinned at difficulty 1e9, which is cheap enough that rented hashrate will chase it. On alpha, a few hundred dollars of rented hash mined about 2,000 pECX — and the beta burn is reported to pay double.",
+        "The pools that went live on the first block were taking registrations the day before. Endpoints and the network's parameters are in the BitWindow catalog the page cites below."
       ],
       "items": [
         {
@@ -141,7 +160,9 @@
           "title": "Alphanet pools are winding down",
           "detail": "The alphanet's own catalog entry points at pool.alpha.avonpool.xyz:3334. Alpha mining kept running until the fork, but the coins stop counting at it."
         }
-      ]
+      ],
+      "id": "mining",
+      "nav": "I want to mine"
     },
     {
       "title": "If you run a node or BitWindow",
@@ -167,7 +188,9 @@
           "title": "The replay problem that beta inherits",
           "detail": "On alpha, the ECX chain mined Bitcoin's shared mempool at activation, so every transaction that users fee-bumped on Bitcoin afterwards became a permanent split; the replay rate fell from 96% to about 9%. A community fix (a block-driven BTC-to-ECX feed that only injects BTC-confirmed transactions) exists as a branch and has to be rebased onto the beta branch to run at this fork."
         }
-      ]
+      ],
+      "id": "node-and-bitwindow",
+      "nav": "I run a node"
     }
   ],
   "warnings": [
@@ -315,7 +338,7 @@
       "group": "Press and community coverage",
       "name": "Bitrue — What Is eCash.com (ECX)? Bitcoin Hard Fork Guide",
       "url": "https://www.bitrue.com/blog/what-is-ecash-com-ecx-crypto-project-guide",
-      "note": "The three-phase rollout stated plainly: Alpha at 963,648, Beta near 967,680 (\u201caround September 20\u201d), Mainnet near 973,728 \u2014 and that only Mainnet creates permanent, tradeable ECX."
+      "note": "The three-phase rollout stated plainly: Alpha at 963,648, Beta near 967,680 (“around September 20”), Mainnet near 973,728 — and that only Mainnet creates permanent, tradeable ECX."
     },
     {
       "group": "Press and community coverage",

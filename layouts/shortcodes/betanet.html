@@ -1,7 +1,9 @@
 {{- /* Renders the betanet (beta fork) page from data/betanet.json.
        Hand-written, single state — see the pecx-burn-status-page skill for the
        conventions this site follows (rail, facts table, sources, change log,
-       and the disclaimer that is not optional). */ -}}
+       and the disclaimer that is not optional).
+       Sections with "numbered": true read as a sequence (ol.steps); the rest are
+       reference lists (ul.items) — pools and node details are not steps. */ -}}
 {{- $d := site.Data.betanet -}}
 {{- if not $d -}}
 <p class="lede">Page data is missing — this page renders <code>data/betanet.json</code>.</p>
@@ -16,7 +18,6 @@
       <div><dt>Expected</dt><dd>{{ $d.fork.eta | default "—" }}</dd></div>
       {{- with $d.fork.blocks_away }}<div><dt>Countdown</dt><dd>{{ . }} blocks away<span class="note">{{ $d.fork.countdown_at }}</span></dd></div>{{ end }}
       <div><dt>Issues</dt><dd>pECX (practice)</dd></div>
-      <div><dt>Mainnet</dt><dd>{{ $d.fork.mainnet | default "—" }}</dd></div>
       <div><dt>Checked</dt><dd>{{ $checked | default "unknown" }}</dd></div>
       <div><dt>Updated</dt><dd>{{ if $manual }}By hand{{ else }}Automatically{{ end }}</dd></div>
       {{- with $d.sources }}<div><dt>Sources</dt><dd>{{ len . }} listed</dd></div>{{ end }}
@@ -45,22 +46,18 @@
         developers, and nothing here is financial advice.</p>
     </section>
 
-    {{- with $d.fork }}
-    <section>
-      <h2 class="section__title">The fork</h2>
-      <table class="facts">
-        <tbody>
-          <tr><th scope="row">Bitcoin block</th><td>{{ .height }}{{ with .height_note }}<span class="note">{{ . }}</span>{{ end }}</td></tr>
-          <tr><th scope="row">Expected</th><td>{{ .eta }}{{ with .eta_detail }}<span class="note">{{ . }}</span>{{ end }}</td></tr>
-          <tr><th scope="row">Mainnet</th><td>{{ .mainnet }}</td></tr>
-        </tbody>
-      </table>
-    </section>
+    {{- with $d.sections }}
+    <nav class="jump" aria-label="On this page">
+      <span class="jump__label">What do you need?</span>
+      {{- range . }}{{ $s := . }}{{ with $s.nav }}{{ with $s.id }}<a href="#{{ . }}">{{ $s.nav }}</a>{{ end }}{{ end }}{{ end }}
+      {{- with $d.facts }}<a href="#facts">The facts</a>{{ end }}
+      <a href="#sources">Sources</a>
+    </nav>
     {{- end }}
 
     {{- with $d.facts }}
-    <section>
-      <h2 class="section__title">The facts, as they stand</h2>
+    <section id="facts">
+      <h2 class="section__title">The fork, in facts</h2>
       <table class="facts">
         <tbody>
           {{- range . }}
@@ -73,15 +70,24 @@
 
     {{- with $d.sections }}
       {{- range . }}
-      <section>
+      {{- $s := . }}
+      <section{{ with .id }} id="{{ . }}"{{ end }}>
         <h2 class="section__title">{{ .title }}</h2>
         {{- range .paragraphs }}<p class="lede">{{ . }}</p>{{ end }}
         {{- with .items }}
+          {{- if $s.numbered }}
         <ol class="steps">
           {{- range . }}
           <li><strong>{{ .title }}</strong>{{ with .detail }} — {{ . }}{{ end }}{{ with .url }} <a href="{{ . }}" rel="noopener nofollow">open</a>{{ end }}</li>
           {{- end }}
         </ol>
+          {{- else }}
+        <ul class="items">
+          {{- range . }}
+          <li><strong>{{ .title }}</strong>{{ with .detail }} — {{ . }}{{ end }}{{ with .url }} <a href="{{ . }}" rel="noopener nofollow">open</a>{{ end }}</li>
+          {{- end }}
+        </ul>
+          {{- end }}
         {{- end }}
       </section>
       {{- end }}
@@ -95,7 +101,7 @@
     {{- end }}
 
     {{- with $d.sources }}
-    <section>
+    <section id="sources">
       <h2 class="section__title">Sources</h2>
       {{- $groups := slice -}}
       {{- range . }}{{ if not (in $groups .group) }}{{ $groups = $groups | append .group }}{{ end }}{{ end -}}
