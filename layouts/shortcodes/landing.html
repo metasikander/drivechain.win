@@ -16,7 +16,7 @@
       {{- with $burn }}<div><dt>Burn</dt><dd>{{ $burnLabel }}</dd></div>{{ end }}
       {{- with $beta }}{{ with .fork }}<div><dt>Betanet</dt><dd>BTC {{ .height }}</dd></div>{{ end }}{{ end }}
       <div><dt>Updated</dt><dd>By hand</dd></div>
-      {{- with site.Params.rawStatePath }}<div><dt>Raw state</dt><dd><a href="{{ . | relURL }}">pecx_burn.json</a></dd></div>{{ end }}
+      {{- with site.Params.rawStatePath }}<div><dt>Burn data</dt><dd><a href="{{ . | relURL }}">pecx_burn.json</a></dd></div>{{ end }}
       {{- with site.Params.contact }}<div><dt>Contact</dt><dd><a href="mailto:{{ . }}">{{ . }}</a></dd></div>{{ end }}
     </dl>
   </aside>
