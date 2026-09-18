@@ -477,6 +477,58 @@ kbd {
   text-align: right;
 }
 
+/* the landing page's entries — one row per notice */
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  max-width: var(--measure);
+}
+
+.entries li { border-bottom: 1px solid var(--line); }
+
+.entries a {
+  display: block;
+  padding: 1.15rem 0 1.2rem;
+  text-decoration: none;
+}
+
+.entry__kicker {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.entry__title {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+}
+
+.entries a:hover .entry__title {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+}
+
+.entry__meta {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+}
+
+.entry__meta b { color: var(--ink); font-weight: 600; }
+
 /* a source with no URL of its own (a dated chat message, say) */
 .sources__name {
   font-family: var(--mono);
