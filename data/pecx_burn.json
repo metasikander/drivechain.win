@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "status": "published",
-  "last_checked": "2026-09-15T08:40:00Z",
-  "last_change": "2026-09-15T07:19:50Z",
+  "last_checked": "2026-09-18T07:02:54Z",
+  "last_change": "2026-09-18T07:03:31Z",
   "cadence": "by hand",
   "monitoring": {
     "mode": "manual",
@@ -13,7 +13,7 @@
   "expect": {
     "ratio": "1/100, rounded up — burn 1,013 → 10.13 ECX",
     "mainnet": "~31 October 2026, BTC block ~973,728",
-    "note": "Balances may not carry over from alpha to beta."
+    "note": "Balances do not carry over from alpha to beta: the betanet is a separate chain that forks Bitcoin at 967,680. Details: /betanet/."
   },
   "sources": [
     {
@@ -65,8 +65,8 @@
     "network": "pECX on the ECX Alphanet — the burn card only exists on Alphanet",
     "ratio": "1/100 of what you burn, rounded up to a whole ECX satoshi: 1,000 → 10 ECX, 1,013 → 10.13 ECX",
     "minimum": "Strictly more than 1,000 pECX. Exactly 1,000 is rejected.",
-    "deadline": "Before the Alphanet stops — expected this week",
-    "mainnet": "ECX mainnet ~31 October 2026 (BTC block ~973,728); Beta soon after the next BTC difficulty adjustment",
+    "deadline": "Before the betanet fork — BTC block 967,680, expected Saturday 19 September 2026 at about 08:00 UTC. The alphanet stops being mined at that fork.",
+    "mainnet": "ECX mainnet ~31 October 2026 (BTC block ~973,728). The betanet forked earlier, at BTC block 967,680 on 19 September 2026 — see /betanet/.",
     "payout": "The OP_RETURN carries the wallet's own first address, and the ECX credit lands there. BitWindow fills it in — you do not type an address.",
     "published_on": "2026-09-15",
     "source_url": "",
@@ -123,8 +123,12 @@
   ],
   "history": [
     {
-      "date": "2026-09-15",
+      "date": "2026-09-18",
       "note": "Specification published; page switched to the conversion guide."
+    },
+    {
+      "date": "2026-09-18",
+      "note": "Deadline pinned to the betanet fork (BTC block 967,680, ~19 Sep 08:00 UTC) and the beta fork linked; see /betanet/."
     },
     {
       "date": "2026-09-15",
