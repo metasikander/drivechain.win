@@ -1,15 +1,15 @@
 {
   "schema": 1,
   "status": "published",
-  "last_checked": "2026-09-18T07:02:54Z",
-  "last_change": "2026-09-18T07:03:31Z",
+  "last_checked": "2026-09-18T07:44:48Z",
+  "last_change": "2026-09-18T07:44:48Z",
   "cadence": "by hand",
   "monitoring": {
     "mode": "manual",
     "note": "The automated watcher was stopped on 14 September 2026 — none of the sources it could read ever carried this. Updated by hand."
   },
-  "headline": "Burn pECX from BitWindow — and do it before the Alphanet stops.",
-  "message": "The burn is implemented in BitWindow: on Alphanet, the Receive page carries a Burn Transaction card. Send more than 1,000 pECX to the Bitcoin eater address, and the wallet puts its own first address in the OP_RETURN — that address receives 1/100 of what you burn as real ECX at mainnet, rounded up. The Alphanet is being retired this week, so anyone holding pECX there has to act.",
+  "headline": "Burn pECX from BitWindow — the window closes at the betanet fork.",
+  "message": "The Alphanet ends at Bitcoin block 967,680 (expected Saturday 19 September, ~08:00 UTC). Burn in BitWindow before then: the Receive page carries a Burn Transaction card that sends your pECX to the Bitcoin eater address and puts your wallet's own first address in the OP_RETURN. That address receives 1/100 of what you burn as real ECX at mainnet, rounded up — 1,013 pECX becomes 10.134 ECX. A burn that does not make it into an Alphanet block before the fork is never credited, so the practical deadline is a block, not a date.",
   "expect": {
     "ratio": "1/100, rounded up — burn 1,013 → 10.13 ECX",
     "mainnet": "~31 October 2026, BTC block ~973,728",
@@ -19,37 +19,37 @@
     {
       "name": "drivechain.info/dev.txt",
       "url": "https://drivechain.info/dev.txt",
-      "note": "Paul's fast-info file — still dated 19 Feb 2026"
+      "note": "Paul Sztorc's fast-info file — still dated 19 Feb 2026, and still silent on the burn"
     },
     {
       "name": "ecash.com",
       "url": "https://ecash.com",
-      "note": "official site"
+      "note": "the official site — names the three stages, has never documented the burn"
     },
     {
       "name": "alpha.ecash.ninja/info",
       "url": "https://alpha.ecash.ninja/info",
-      "note": "alphanet hub"
+      "note": "the Alphanet hub, while it lasts"
     },
     {
       "name": "LayerTwo-Labs/drivechain-frontends",
       "url": "https://github.com/LayerTwo-Labs/drivechain-frontends",
-      "note": "the code that implements this"
+      "note": "the code that implements the burn — read it instead of the chat"
     },
     {
       "name": "ecashblog.com",
-      "url": "https://ecashblog.com/rss.xml",
-      "note": "community blog"
+      "url": "https://ecashblog.com",
+      "note": "the community's own reporting"
     },
     {
-      "name": "t.me/s/DcInsiders",
-      "url": "https://t.me/s/DcInsiders",
-      "note": "telegram (unreadable via /s/)"
+      "name": "Drivechain Talk (Telegram, private)",
+      "url": "https://t.me/DcInsiders",
+      "note": "where the burn was announced; no public web preview"
     }
   ],
   "announcement": {
     "source_url": "",
-    "source_note": "Drivechain Talk (Telegram, private supergroup) — Paul Sztorc, 14 Sep 2026 01:22 UTC, confirmed by him at 01:25 UTC (\"Yes that's the one\"); message ids 250407, 250411, 250412. Ratio and minimum were restated in the same group on 15 Sep (\"confirmed that you will get 10 ECX for every 1000 alpha pECX, as long as you burn at least 1000\"), and the numbers below were then verified against the implementation itself.",
+    "source_note": "Drivechain Talk (Telegram, private supergroup) — Paul Sztorc, 14 Sep 2026 01:22 UTC, confirmed by him at 01:25 UTC (\"Yes that's the one\"); message ids 250407, 250411, 250412. Ratio and minimum were restated in the same group on 15 Sep (\"confirmed that you will get 10 ECX for every 1000 alpha pECX, as long as you burn at least 1000\"), and the numbers below were then read out of the implementation itself.",
     "quote": "1. Send to 1BitcoinEaterDontSendxxx  2. Add a 0-valued op return, to an address A that you have the key for. The coins will go to address A. As long as there is more than the threshold (1000).",
     "date": "2026-09-14",
     "official": false,
@@ -65,12 +65,12 @@
     "network": "pECX on the ECX Alphanet — the burn card only exists on Alphanet",
     "ratio": "1/100 of what you burn, rounded up to a whole ECX satoshi: 1,000 → 10 ECX, 1,013 → 10.13 ECX",
     "minimum": "Strictly more than 1,000 pECX. Exactly 1,000 is rejected.",
-    "deadline": "Before the betanet fork — BTC block 967,680, expected Saturday 19 September 2026 at about 08:00 UTC. The alphanet stops being mined at that fork.",
-    "mainnet": "ECX mainnet ~31 October 2026 (BTC block ~973,728). The betanet forked earlier, at BTC block 967,680 on 19 September 2026 — see /betanet/.",
+    "deadline": "Before the betanet fork — BTC block 967,680, expected Saturday 19 September 2026 at about 08:00 UTC. BitWindow stops offering the card when the Alphanet stops.",
+    "mainnet": "ECX mainnet at BTC block ~973,728, on or around 31 October 2026. The betanet forked earlier, at block 967,680 on 19 September — that fork is on the betanet page, not this one.",
     "payout": "The OP_RETURN carries the wallet's own first address, and the ECX credit lands there. BitWindow fills it in — you do not type an address.",
-    "published_on": "2026-09-15",
+    "published_on": "2026-09-15, revised 2026-09-18",
     "source_url": "",
-    "source_note": "Verified against the implementation: ECXBurnAddress, ECXBurnMinimumSats = 100,000,000,000 sat and ECXCreditSats = ceil(burn/100) in sidechain-orchestrator/wallet/ecx_burn.go. No official document exists.",
+    "source_note": "Verified against the implementation, not a document: ECXBurnAddress, ECXBurnMinimumSats = 100,000,000,000 sat and ECXCreditSats = ceil(burn/100) in sidechain-orchestrator/wallet/ecx_burn.go. No official specification exists.",
     "guide": [
       {
         "title": "Update BitWindow, and be on Alphanet",
@@ -84,14 +84,15 @@
         "title": "Enter the amount, read the two panels, press Burn Transaction",
         "detail": "Up to 8 decimals, and it must exceed 1,000. BitWindow then shows Alphanet → Real ECX (what you give up, what you get) and the outputs: your amount to the eater address, plus a 0-value OP_RETURN carrying your wallet's first address. Press Burn Transaction, and keep the txid it returns — that is your proof of burn."
       }
-    ]
+    ],
+    "deadline_short": "before the betanet fork, BTC 967,680, ~19 Sep 08:00 UTC"
   },
   "warnings": [
     "It cannot be undone. The eater address has no private key, by design — those pECX are gone, and what comes back is the credit at mainnet, nothing else.",
     "1,000 is not enough. The threshold is exclusive: burning exactly 1,000 gets you nothing, and there is no topping up afterwards.",
-    "Your ECX is credited to your wallet's first address — you never type a payout address. If you cannot sign for that address later you cannot reach the ECX, so don't burn from a wallet you are about to throw away.",
-    "The Alphanet is being retired this week. Anything left on it after it stops is not redeemable.",
-    "This came out of a Telegram chat; there is still no official specification document. Ask before moving anything you would miss.",
+    "Your ECX is credited to your wallet's first address — you never type a payout address. If you cannot sign for that address later, you cannot reach the ECX, so do not burn from a wallet you are about to throw away.",
+    "The clock is Bitcoin's, not yours. A burn left in the Alphanet mempool when the last alpha block is mined is never credited.",
+    "This came out of the project's own Telegram group; there is still no official specification document. Ask before moving anything you would miss.",
     "Nobody legitimate needs your seed phrase or private key to help you redeem. Anyone who asks is robbing you."
   ],
   "verify": [
@@ -124,7 +125,11 @@
   "history": [
     {
       "date": "2026-09-18",
-      "note": "Specification published; page switched to the conversion guide."
+      "note": "Procedure published from the implementation; page switched to the conversion guide. No official specification exists."
+    },
+    {
+      "date": "2026-09-18",
+      "note": "Copy pass: headline and message pinned to the fork block, deadline row tightened, warnings and sources rewritten for a reader."
     },
     {
       "date": "2026-09-18",
