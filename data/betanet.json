@@ -313,6 +313,18 @@
     },
     {
       "group": "Press and community coverage",
+      "name": "Bitrue — What Is eCash.com (ECX)? Bitcoin Hard Fork Guide",
+      "url": "https://www.bitrue.com/blog/what-is-ecash-com-ecx-crypto-project-guide",
+      "note": "The three-phase rollout stated plainly: Alpha at 963,648, Beta near 967,680 (\u201caround September 20\u201d), Mainnet near 973,728 \u2014 and that only Mainnet creates permanent, tradeable ECX."
+    },
+    {
+      "group": "Press and community coverage",
+      "name": "CryptoExpo — Bitcoin eCash Fork Enters Alpha",
+      "url": "https://cryptoexpo.net/articles/bitcoin-ecash-fork-enters-alpha/",
+      "note": "What the beta stage is expected to test (wallets, exchanges, custodians) and the unresolved replay-protection question ahead of mainnet."
+    },
+    {
+      "group": "Press and community coverage",
       "name": "ecashblog.com",
       "url": "https://ecashblog.com",
       "note": "The community's own reporting on alpha: orphan blocks, the difficulty doldrums, and the sidechains being pentested before mainnet."
